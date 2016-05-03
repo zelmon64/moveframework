@@ -172,7 +172,7 @@ namespace MoveDevice
 	void CloseNavs() {
 	  for (int i=0; i<MAXMOVES; i++) {
 			if (NavHandles[i]) {
-				hid_close(NAvHandles[i]);
+				hid_close(NavHandles[i]);
 				NavHandles[i]=0;
 			}
 	  }
