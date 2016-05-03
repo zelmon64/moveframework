@@ -117,7 +117,7 @@ namespace Move
 				resetTimer=0;
 			}
 
-			
+
 		}
 	}
 
@@ -130,7 +130,12 @@ namespace Move
 	{
 		MoveDevice::SetMoveRumble(id, value);
 	}
-
+	/*
+	void MoveController::setColour(int r, int g, int b)
+	{
+		MoveDevice::SetMoveColour(id, r, g, b);
+	}
+	*/
 	void MoveController::setOrientationGain(float gain)
 	{
 		orientation->setOrientationGain(gain);

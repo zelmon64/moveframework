@@ -8,19 +8,19 @@ int numMoves;
 int numNavs;
 
 typedef struct tagVec3
-{ 
+{
 	float x;
 	float y;
 	float z;
-} Vec3; 
+} Vec3;
 
 typedef struct tagQuat
-{ 
+{
 	float w;
 	float x;
 	float y;
 	float z;
-} Quat; 
+} Quat;
 
 typedef void (__stdcall *UPDATE_CALLBACK)(int id, Vec3 position, Quat orientation, int trigger);
 UPDATE_CALLBACK registered_callback;
@@ -78,7 +78,7 @@ class MoveObserver : public Move::IMoveObserver
 };
 MoveObserver* observer=new MoveObserver;
 
-extern "C" __declspec(dllexport) void __stdcall init() 
+extern "C" __declspec(dllexport) void __stdcall init()
 {
 		move = Move::createDevice();
 
@@ -92,20 +92,20 @@ extern "C" __declspec(dllexport) void __stdcall init()
 
 extern "C" __declspec(dllexport) void __stdcall close()
 {
-	 
+
 	move->closeCamera();
 	move->closeMoves();
 
 	numMoves = 0;
-	numNavs = 0; 
+	numNavs = 0;
 }
 
-extern "C" __declspec(dllexport) int __stdcall getMovesCount() 
+extern "C" __declspec(dllexport) int __stdcall getMovesCount()
 {
 	return numMoves;
 }
 
-extern "C" __declspec(dllexport) int __stdcall getNavsCount() 
+extern "C" __declspec(dllexport) int __stdcall getNavsCount()
 {
 	return numNavs;
 }
@@ -121,12 +121,12 @@ extern "C" __declspec(dllexport) void __stdcall subscribeMove(UPDATE_CALLBACK up
 	move->subsribe(observer);
 }
 
-extern "C" __declspec(dllexport) void __stdcall unsubscribeMove() 
+extern "C" __declspec(dllexport) void __stdcall unsubscribeMove()
 {
 	move->unsubsribe(observer);
 }
 
-extern "C" __declspec(dllexport) Quat __stdcall getOrientation(int id) 
+extern "C" __declspec(dllexport) Quat __stdcall getOrientation(int id)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
 	Move::Quat ori = data.orientation;
@@ -138,7 +138,7 @@ extern "C" __declspec(dllexport) Quat __stdcall getOrientation(int id)
 	return q;
 }
 
-extern "C" __declspec(dllexport) Vec3 __stdcall getPosition(int id) 
+extern "C" __declspec(dllexport) Vec3 __stdcall getPosition(int id)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
 	Move::Vec3 pos = data.position;
@@ -160,45 +160,50 @@ extern "C" __declspec(dllexport) Vec3 __stdcall getAngularAcceleration(int id)
 	return v;
 }
 
-extern "C" __declspec(dllexport) bool __stdcall getButtonState(int id, int keyId) 
+extern "C" __declspec(dllexport) bool __stdcall getButtonState(int id, int keyId)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
 	return data.isButtonPressed((Move::MoveButton)keyId);
 }
 
-extern "C" __declspec(dllexport) int __stdcall getTriggerValue(int id) 
+extern "C" __declspec(dllexport) int __stdcall getTriggerValue(int id)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
 	return data.trigger;
 }
 
-extern "C" __declspec(dllexport) void __stdcall setRumble(int id, int value) 
+extern "C" __declspec(dllexport) void __stdcall setRumble(int id, int value)
 {
 	move->getMove(id)->setRumble(value);
 }
-
-extern "C" __declspec(dllexport) bool __stdcall getNavButtonState(int id, int keyId) 
+/*
+extern "C" __declspec(dllexport) void __stdcall setColour(int id, int r, int g, int b)
+{
+	move->getMove(id)->setColour(r, g, b);
+}
+*/
+extern "C" __declspec(dllexport) bool __stdcall getNavButtonState(int id, int keyId)
 {
 	Move::NavData data = move->getNav(id)->getNavData();
 	return data.isButtonPressed((Move::MoveButton)keyId);
 }
 
-extern "C" __declspec(dllexport) bool __stdcall getNavTrigger1(int id) 
+extern "C" __declspec(dllexport) bool __stdcall getNavTrigger1(int id)
 {
 	return move->getNav(id)->getNavData().trigger1;
 }
 
-extern "C" __declspec(dllexport) bool __stdcall getNavTrigger2(int id) 
+extern "C" __declspec(dllexport) bool __stdcall getNavTrigger2(int id)
 {
 	return move->getNav(id)->getNavData().trigger2;
 }
 
-extern "C" __declspec(dllexport) bool __stdcall getNavStickX(int id) 
+extern "C" __declspec(dllexport) bool __stdcall getNavStickX(int id)
 {
 	return move->getNav(id)->getNavData().stickX;
 }
 
-extern "C" __declspec(dllexport) bool __stdcall getNavStickY(int id) 
+extern "C" __declspec(dllexport) bool __stdcall getNavStickY(int id)
 {
 	return move->getNav(id)->getNavData().stickY;
 }

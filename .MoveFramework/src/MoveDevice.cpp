@@ -2,9 +2,9 @@
    This file reads all the values from the Move, and changes its colour, and rumbles.
    There should be no platform specific code here, and no knowledge of the transport layer
    by Carl Kenner 4 October 2010 - 16 November 2010
-   This file (and anything derived from it, based on it, or using it) is released under a 
-   non-military license, it may not be used for any military purpose, including military 
-   research, or military funded research, training, recruitment, troop entertainment, 
+   This file (and anything derived from it, based on it, or using it) is released under a
+   non-military license, it may not be used for any military purpose, including military
+   research, or military funded research, training, recruitment, troop entertainment,
    design of military systems, or anything else involving the military. I didn't write this
    to help kill people, sorry.
 */
@@ -38,7 +38,7 @@ namespace MoveDevice
 
 		//PS Move standard bt stack
 		devs = hid_enumerate(0x054c, 0x03d5);
-		cur_dev = devs;	
+		cur_dev = devs;
 		while (cur_dev) {
 			handle = hid_open_path(cur_dev->path);
 			if (hid_read_timeout(handle,buf,49,500)>0)
@@ -55,7 +55,7 @@ namespace MoveDevice
 
 		//PS Move MotionInJoy
 		devs = hid_enumerate(0x8888, 0x0508);
-		cur_dev = devs;	
+		cur_dev = devs;
 		while (cur_dev) {
 			handle = hid_open_path(cur_dev->path);
 			if (hid_read_timeout(handle,buf,49,500)>0)
@@ -72,7 +72,7 @@ namespace MoveDevice
 
 		//Navigation Controller MotionInJoy
 		devs = hid_enumerate(0x8888, 0x0408);
-		cur_dev = devs;	
+		cur_dev = devs;
 		while (cur_dev) {
 			handle = hid_open_path(cur_dev->path);
 			if (hid_read_timeout(handle,buf,49,500)>0)
@@ -113,7 +113,7 @@ namespace MoveDevice
 			return false;
 	}
 
-	int PairMoves() 
+	int PairMoves()
 	{
 		int numBtMacSet=0;
 		struct hid_device_info *devs, *cur_dev;
@@ -125,7 +125,7 @@ namespace MoveDevice
 		if (!getHostBtAddress(hostAddr))
 			return -1;
 		devs = hid_enumerate(0x054c, 0x03d5);
-		cur_dev = devs;	
+		cur_dev = devs;
 		while (cur_dev) {
 			handle = hid_open_path(cur_dev->path);
 			memset(buf,0,49);
@@ -169,7 +169,16 @@ namespace MoveDevice
 	  }
 	}
 
-	// sends output to the Move, must be done every second or so, 
+	void CloseNavs() {
+	  for (int i=0; i<MAXMOVES; i++) {
+			if (NavHandles[i]) {
+				hid_close(NAvHandles[i]);
+				NavHandles[i]=0;
+			}
+	  }
+	}
+
+	// sends output to the Move, must be done every second or so,
 	// or the light and rumble switch themselves off
 	bool SendMoveOutput(int index) {
 		unsigned char report[49];
@@ -185,7 +194,7 @@ namespace MoveDevice
 		return hid_write(MoveHandles[index], report, 49)>1;
 	}
 
-	// Sets the colour of the move's glowing ball, each component is 0x00 to 0xFF, 
+	// Sets the colour of the move's glowing ball, each component is 0x00 to 0xFF,
 	// but the green led is much darker than the other leds, so FF FF FF looks purple.
 	// Use something like FF AF FF for white.
 	bool SetMoveColour(int index, int r, int g, int b) {
@@ -240,7 +249,7 @@ namespace MoveDevice
 			return false;
 		}
 
-		data->Buttons    = report[2] | (report[1] << 8) 
+		data->Buttons    = report[2] | (report[1] << 8)
 							| ((report[3] & 1) << 16) | ((report[4] & 0xF0) << 13);
 		data->TAnalog    = report[6]; // report 5 is the same, but slightly older
 		data->RawBattery = report[12];
@@ -252,18 +261,18 @@ namespace MoveDevice
 		data->RawForceX = report[20]*256 + report[19] - 32768; // same as 6 bytes earlier
 		data->RawForceZ = report[22]*256 + report[21] - 32768;
 		data->RawForceY = report[24]*256 + report[23] - 32768;
-	
+
 		data->RawGyroPitch = (report[32]*256 + report[31]) - 32768; // same as 6 bytes earlier
 		data->RawGyroRoll  = (report[34]*256 + report[33]) - 32768;
 		data->RawGyroYaw   = 32768 - (report[36]*256 + report[35]);
-	
+
 		// -1733 = 29.0, -1685.5 = 29 degrees C // -1681.5 = 29.5
-		data->RawTemperature = TwelveBits(report[37]*16+(report[38] >> 4)); 
-	
+		data->RawTemperature = TwelveBits(report[37]*16+(report[38] >> 4));
+
 		data->RawMagnetX = -TwelveBits((report[38] & 15)*256+report[39]);
 		data->RawMagnetZ =  TwelveBits(report[40]*16 + (report[41] >> 4));
 		data->RawMagnetY = -TwelveBits((report[41] & 15)*256+report[42]);
-  
+
 		if (old) {
 			old->TAnalog = report[5];
 			old->RawForceX = report[14]*256 + report[13] - 32768; // same as 6 bytes earlier
@@ -345,7 +354,7 @@ namespace MoveDevice
 		return true;
 	}
 
-	bool ReadMoveBluetoothSettings(int index, PMoveBluetooth bt) 
+	bool ReadMoveBluetoothSettings(int index, PMoveBluetooth bt)
 	{
 		if (index>=MAXMOVES || index<0 || !bt) return false;
 		unsigned char report[49];
