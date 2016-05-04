@@ -17,7 +17,9 @@
 #define MAXMOVES 30
 
 #ifdef _MSC_VER 
-#define snprintf sprintf_s
+	#if _MSC_VER<1900
+		#define snprintf sprintf_s
+	#endif
 #endif
 
 namespace MoveDevice
