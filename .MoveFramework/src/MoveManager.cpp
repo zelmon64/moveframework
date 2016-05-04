@@ -75,6 +75,7 @@ namespace Move
 		MoveLock::deinit();
 
 		MoveDevice::CloseMoves();
+		MoveDevice::CloseNavs();
 
 		moveCount = -1;
 		navCount = -1;
