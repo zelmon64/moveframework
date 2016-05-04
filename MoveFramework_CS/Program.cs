@@ -34,6 +34,7 @@ namespace MoveFramework_CS
 
             Console.ReadKey();
             MoveWrapper.unsubscribeMove();
+            MoveWrapper.close();
         }
 
         void MoveUpdateCallback(int id, MoveWrapper.Vector3 position, MoveWrapper.Quaternion orientation, int trigger)
@@ -51,11 +52,14 @@ namespace MoveFramework_CS
         void MoveKeyUpCallback(int id, int keyCode)
         {
             Console.WriteLine("KEYUP moveid: " + id + " keyname: " + Enum.GetName(typeof(MoveButton), keyCode));
+            MoveWrapper.setRumble(id, 0);
         }
 
         void MoveKeyDownCallback(int id, int keyCode)
         {
             Console.WriteLine("KEYDOWN moveid: " + id + " keyname: " + Enum.GetName(typeof(MoveButton), keyCode));
+            int rumval = MoveWrapper.getTriggerValue(id);
+            MoveWrapper.setRumble(id, rumval);
         }
 
         void NavUpdateCallback(int id, int trigger1, int trigger2, int stickX, int stickY)
