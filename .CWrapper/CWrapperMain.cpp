@@ -176,12 +176,12 @@ extern "C" __declspec(dllexport) void __stdcall setRumble(int id, int value)
 {
 	move->getMove(id)->setRumble(value);
 }
-/*
+
 extern "C" __declspec(dllexport) void __stdcall setColour(int id, int r, int g, int b)
 {
 	move->getMove(id)->setColour(r, g, b);
 }
-*/
+
 extern "C" __declspec(dllexport) bool __stdcall getNavButtonState(int id, int keyId)
 {
 	Move::NavData data = move->getNav(id)->getNavData();

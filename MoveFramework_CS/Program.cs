@@ -53,6 +53,7 @@ namespace MoveFramework_CS
         {
             Console.WriteLine("KEYUP moveid: " + id + " keyname: " + Enum.GetName(typeof(MoveButton), keyCode));
             MoveWrapper.setRumble(id, 0);
+            MoveWrapper.setColour(id, 100, 100, 100);
         }
 
         void MoveKeyDownCallback(int id, int keyCode)
@@ -60,6 +61,7 @@ namespace MoveFramework_CS
             Console.WriteLine("KEYDOWN moveid: " + id + " keyname: " + Enum.GetName(typeof(MoveButton), keyCode));
             int rumval = MoveWrapper.getTriggerValue(id);
             MoveWrapper.setRumble(id, rumval);
+            MoveWrapper.setColour(id, 0, 0, 0);
         }
 
         void NavUpdateCallback(int id, int trigger1, int trigger2, int stickX, int stickY)

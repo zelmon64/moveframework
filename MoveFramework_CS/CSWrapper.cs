@@ -79,6 +79,8 @@ namespace MoveFramework_CS
         [DllImport("MF_CWrapper.dll")]
         public static extern void setRumble(int id, int value);
         [DllImport("MF_CWrapper.dll")]
+        public static extern void setColour(int id, int r, int g, int b);
+        [DllImport("MF_CWrapper.dll")]
         public static extern int getNavTrigger1(int id);
         [DllImport("MF_CWrapper.dll")]
         public static extern int getNavTrigger2(int id);

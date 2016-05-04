@@ -12,7 +12,7 @@ namespace Move
 
 		virtual MoveData getMoveData()=0;
 		virtual void setRumble(int value)=0;
-		//virtual void setColour(int r, int g, int b)=0;
+		virtual void setColour(int r, int g, int b)=0;
 		virtual void useMagnetometers(bool value)=0;
 		virtual void setOrientationGain(float gain)=0;
 		virtual void calibrateMagnetometer()=0;
