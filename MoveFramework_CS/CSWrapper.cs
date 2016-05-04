@@ -54,6 +54,8 @@ namespace MoveFramework_CS
         [DllImport("MF_CWrapper.dll")]
         public static extern void init();
         [DllImport("MF_CWrapper.dll")]
+        public static extern void close();
+        [DllImport("MF_CWrapper.dll")]
         public static extern int getMovesCount();
         [DllImport("MF_CWrapper.dll")]
         public static extern int getNavsCount();
