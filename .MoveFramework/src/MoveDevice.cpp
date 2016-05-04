@@ -169,15 +169,6 @@ namespace MoveDevice
 	  }
 	}
 
-	void CloseNavs() {
-	  for (int i=0; i<MAXMOVES; i++) {
-			if (NavHandles[i]) {
-				hid_close(NavHandles[i]);
-				NavHandles[i]=0;
-			}
-	  }
-	}
-
 	// sends output to the Move, must be done every second or so,
 	// or the light and rumble switch themselves off
 	bool SendMoveOutput(int index) {
