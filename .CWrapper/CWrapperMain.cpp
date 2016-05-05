@@ -172,6 +172,12 @@ extern "C" __declspec(dllexport) int __stdcall getTriggerValue(int id)
 	return data.trigger;
 }
 
+extern "C" __declspec(dllexport) int __stdcall getBatteryValue(int id)
+{
+	Move::MoveData data = move->getMove(id)->getMoveData();
+	return data.battery;
+}
+
 extern "C" __declspec(dllexport) void __stdcall setRumble(int id, int value)
 {
 	move->getMove(id)->setRumble(value);

@@ -13,9 +13,13 @@ namespace Move
 		Vec3 velocity;
 		Vec3 acceleration;
 
+		Vec3 magnetisation;
+
 		Quat orientation;
 		Vec3 angularVelocity;
 		Vec3 angularAcceleration;
+
+		int battery;
 
 		int buttons;
 		int trigger;

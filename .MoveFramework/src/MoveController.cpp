@@ -97,6 +97,8 @@ namespace Move
 			manager->getMoveDataEx(id).buttons = m.Buttons;
 			manager->getMoveDataEx(id).trigger = m.TAnalog;
 
+			manager->getMoveDataEx(id).battery = m.RawBattery;
+
 			manager->moveUpdated(id);
 
 			lock.release();
