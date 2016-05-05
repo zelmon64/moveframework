@@ -26,6 +26,7 @@ namespace MoveFramework_CS
                 MoveWrapper.Quaternion q = MoveWrapper.getOrientation(0);
                 MoveWrapper.Vector3 v = MoveWrapper.getPosition(0);
                 int trigger = MoveWrapper.getTriggerValue(0);
+                int battery = MoveWrapper.getBatteryValue(0);
                 MoveWrapper.setRumble(0, 255);
                 Thread.Sleep(40);
                 MoveWrapper.setRumble(0, 0);
@@ -62,6 +63,9 @@ namespace MoveFramework_CS
             int rumval = MoveWrapper.getTriggerValue(id);
             MoveWrapper.setRumble(id, rumval);
             MoveWrapper.setColour(id, 0, 0, 0);
+            Console.WriteLine("Battery level: " + MoveWrapper.getBatteryValue(id));
+            Console.WriteLine(Enum.GetName(typeof(PSMove_Battery_Level), MoveWrapper.getBatteryValue(id)));
+
         }
 
         void NavUpdateCallback(int id, int trigger1, int trigger2, int stickX, int stickY)

@@ -20,6 +20,19 @@ namespace MoveFramework_CS
         B_PS = 0x10000,
         B_MOVE = 0x80000,
         B_T = 0x100000
+    }
+
+    public enum PSMove_Battery_Level
+    {
+        // copied from NoxWings' PSMoveData.cs
+        Batt_MIN = 0x00, /*!< Battery is almost empty (< 20%) */
+        Batt_20Percent = 0x01, /*!< Battery has at least 20% remaining */
+        Batt_40Percent = 0x02, /*!< Battery has at least 40% remaining */
+        Batt_60Percent = 0x03, /*!< Battery has at least 60% remaining */
+        Batt_80Percent = 0x04, /*!< Battery has at least 80% remaining */
+        Batt_MAX = 0x05, /*!< Battery is fully charged (not on charger) */
+        Batt_CHARGING = 0xEE, /*!< Battery is currently being charged */
+        Batt_CHARGING_DONE = 0xEF, /*!< Battery is fully charged (on charger) */
     };
 
     public class MoveWrapper
@@ -76,6 +89,8 @@ namespace MoveFramework_CS
         public static extern bool getButtonState(int id, [MarshalAs(UnmanagedType.I4)] MoveButton keyId);
         [DllImport("MF_CWrapper.dll")]
         public static extern int getTriggerValue(int id);
+        [DllImport("MF_CWrapper.dll")]
+        public static extern int getBatteryValue(int id);
         [DllImport("MF_CWrapper.dll")]
         public static extern void setRumble(int id, int value);
         [DllImport("MF_CWrapper.dll")]
