@@ -21,6 +21,12 @@ namespace Move
 
 		int battery;
 
+		int temperature;
+
+		int magnetX;
+		int magnetY;
+		int magnetZ;
+
 		int buttons;
 		int trigger;
 

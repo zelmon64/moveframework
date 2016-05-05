@@ -20,7 +20,7 @@ namespace MoveFramework_CS
         B_PS = 0x10000,
         B_MOVE = 0x80000,
         B_T = 0x100000
-    }
+    };
 
     public enum PSMove_Battery_Level
     {
@@ -40,12 +40,14 @@ namespace MoveFramework_CS
         public delegate void MoveUpdateCallback(int id, [MarshalAs(UnmanagedType.Struct)] Vector3 position, [MarshalAs(UnmanagedType.Struct)] Quaternion orientation, int trigger);
         public delegate void NavUpdateCallback(int id, int trigger1, int trigger2, int stickX, int stickY);
         public delegate void MoveKeyCallback(int id, int keyCode);
+        public delegate void MovePropertyCallback(int id);
         private static MoveUpdateCallback updateCallback;
         private static MoveKeyCallback keyDownCallback;
         private static MoveKeyCallback keyUpCallback;
         private static NavUpdateCallback navUpdateCallback;
         private static MoveKeyCallback navKeyDownCallback;
         private static MoveKeyCallback navKeyUpCallback;
+        private static MovePropertyCallback MoveBatteryCallback;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Vector3
@@ -86,11 +88,25 @@ namespace MoveFramework_CS
         [return: MarshalAs(UnmanagedType.Struct)]
         public static extern Vector3 getAngularAcceleration(int id);
         [DllImport("MF_CWrapper.dll")]
+        [return: MarshalAs(UnmanagedType.Struct)]
+        public static extern Vector3 getAcceleration(int id);
+        [DllImport("MF_CWrapper.dll")]
+        [return: MarshalAs(UnmanagedType.Struct)]
+        public static extern Vector3 getMagnetisation(int id);
+        [DllImport("MF_CWrapper.dll")]
         public static extern bool getButtonState(int id, [MarshalAs(UnmanagedType.I4)] MoveButton keyId);
         [DllImport("MF_CWrapper.dll")]
         public static extern int getTriggerValue(int id);
         [DllImport("MF_CWrapper.dll")]
         public static extern int getBatteryValue(int id);
+        [DllImport("MF_CWrapper.dll")]
+        public static extern int getTemperatureValue(int id);
+        [DllImport("MF_CWrapper.dll")]
+        public static extern int getMagnetXValue(int id);
+        [DllImport("MF_CWrapper.dll")]
+        public static extern int getMagnetYValue(int id);
+        [DllImport("MF_CWrapper.dll")]
+        public static extern int getMagnetZValue(int id);
         [DllImport("MF_CWrapper.dll")]
         public static extern void setRumble(int id, int value);
         [DllImport("MF_CWrapper.dll")]
@@ -113,6 +129,11 @@ namespace MoveFramework_CS
             MoveWrapper.navKeyDownCallback = navKeyDown;
             MoveWrapper.navKeyUpCallback = navKeyUp;
             subscribeMove(updateCallback, keyDownCallback, keyUpCallback, navCallback, navKeyDown, navKeyUp);
+        }
+
+        public static void somethink(MovePropertyCallback MoveBatteryCallback)
+        {
+            MoveWrapper.MoveBatteryCallback = MoveBatteryCallback;
         }
     }
 }

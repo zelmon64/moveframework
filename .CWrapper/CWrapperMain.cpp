@@ -160,6 +160,28 @@ extern "C" __declspec(dllexport) Vec3 __stdcall getAngularAcceleration(int id)
 	return v;
 }
 
+extern "C" __declspec(dllexport) Vec3 __stdcall getAcceleration(int id)
+{
+	Move::MoveData data = move->getMove(id)->getMoveData();
+	Move::Vec3 acc = data.acceleration;
+	Vec3 v;
+	v.x = acc.x;
+	v.y = acc.y;
+	v.z = acc.z;
+	return v;
+}
+
+extern "C" __declspec(dllexport) Vec3 __stdcall getMagnetisation(int id)
+{
+	Move::MoveData data = move->getMove(id)->getMoveData();
+	Move::Vec3 mag = data.magnetisation;
+	Vec3 v;
+	v.x = mag.x;
+	v.y = mag.y;
+	v.z = mag.z;
+	return v;
+}
+
 extern "C" __declspec(dllexport) bool __stdcall getButtonState(int id, int keyId)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
@@ -176,6 +198,30 @@ extern "C" __declspec(dllexport) int __stdcall getBatteryValue(int id)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
 	return data.battery;
+}
+
+extern "C" __declspec(dllexport) int __stdcall getTemperatureValue(int id)
+{
+	Move::MoveData data = move->getMove(id)->getMoveData();
+	return data.temperature;
+}
+
+extern "C" __declspec(dllexport) int __stdcall getMagnetXValue(int id)
+{
+	Move::MoveData data = move->getMove(id)->getMoveData();
+	return data.magnetX;
+}
+
+extern "C" __declspec(dllexport) int __stdcall getMagnetYValue(int id)
+{
+	Move::MoveData data = move->getMove(id)->getMoveData();
+	return data.magnetY;
+}
+
+extern "C" __declspec(dllexport) int __stdcall getMagnetZValue(int id)
+{
+	Move::MoveData data = move->getMove(id)->getMoveData();
+	return data.magnetZ;
 }
 
 extern "C" __declspec(dllexport) void __stdcall setRumble(int id, int value)
