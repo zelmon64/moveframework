@@ -46,8 +46,8 @@ namespace Move
 	bool EyeController::initCamera(int numMoves)
 	{
 		this->numMoves=numMoves;
-		if (this->numMoves>2)
-			this->numMoves=2;
+		if (this->numMoves>4)
+			this->numMoves=4;	// incresed the maximum number of tracked moves from two to four
 
 		GUID _cameraGUID;
 
