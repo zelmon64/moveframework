@@ -67,34 +67,62 @@ namespace MoveFramework_CS
         void MoveKeyUpCallback(int id, int keyCode)
         {
             Console.WriteLine("KEYUP moveid: " + id + " keyname: " + Enum.GetName(typeof(MoveButton), keyCode));
-            MoveWrapper.setRumble(id, 0);
-            MoveWrapper.setColour(id, 100, 100, 100);
+            if (keyCode == 0x80)
+            {
+                MoveWrapper.setRumble(id, 0);
+            }
+            //MoveWrapper.setColour(id, 100, 100, 100);
         }
 
         void MoveKeyDownCallback(int id, int keyCode)
         {
             Console.WriteLine("KEYDOWN moveid: " + id + " keyname: " + Enum.GetName(typeof(MoveButton), keyCode));
-            int rumval = MoveWrapper.getTriggerValue(id);
-            MoveWrapper.setRumble(id, rumval);
-            MoveWrapper.setColour(id, 0, 0, 0);
-            //Console.WriteLine("Battery level: " + MoveWrapper.getBatteryValue(id));
-            Console.WriteLine(Enum.GetName(typeof(PSMove_Battery_Level), MoveWrapper.getBatteryValue(id)));
+            if (keyCode == 0x80)
+            {
+                int rumval = MoveWrapper.getTriggerValue(id);
+                MoveWrapper.setRumble(id, rumval);
+            }
+
+            //MoveWrapper.setColour(id, 0, 0, 0);
+
+            if (keyCode == 0x10000)
+            {
+                Console.WriteLine("Battery level: " + MoveWrapper.getBatteryValue(id));
+                Console.WriteLine(Enum.GetName(typeof(PSMove_Battery_Level), MoveWrapper.getBatteryValue(id)));
+            }
             // -1733 = 29.0, -1685.5 = 29 degrees C // -1681.5 = 29.5 
-            int rawtemp = MoveWrapper.getTemperatureValue(id);
-            double realtemp = 29.0 + 0.5/(1733.0-1681.5) * (rawtemp+1733);
-            Console.WriteLine("TEMPERATURE: " + rawtemp + " = " + realtemp + " Deg C");
-            //MoveWrapper.Vector3 angacc = MoveWrapper.getAngularAcceleration(id);
-            //Console.WriteLine("ANGULARACCELERATION (X,Y,Z): ( " + angacc.x + " , " + angacc.y + " , " + angacc.z + " ) ");
-            /*
-            .Vector3 acc = MoveWrapper.getAcceleration(id);
-            Console.WriteLine("ACCELERATION (X,Y,Z): ( " + acc.x + " , " + acc.y + " , " + acc.z + " ) ");
-            /*
-            MoveWrapper.Vector3 magnet = MoveWrapper.getMagnetisation(id);
-            Console.WriteLine("MAGNETISATION (X,Y,Z): ( " + magnet.x + " , " + magnet.y + " , " + magnet.z + " ) ");
-            Console.WriteLine("MAGNETISATION (X,Y,Z): ( " +
-                MoveWrapper.getMagnetXValue(id) + " , " + MoveWrapper.getMagnetYValue(id) + " , " 
-                + MoveWrapper.getMagnetZValue(id) + " ) ");
-            */
+
+            if (keyCode == 0x100)
+            {
+                int rawtemp = MoveWrapper.getTemperatureValue(id);
+                double realtemp = 29.0 + 0.5 / (1733.0 - 1681.5) * (rawtemp + 1733);
+                Console.WriteLine("TEMPERATURE: " + rawtemp + " = " + realtemp + " Deg C");
+            }
+
+            if (keyCode == 0x20)
+            {
+                MoveWrapper.Vector3 angacc = MoveWrapper.getAngularAcceleration(id);
+                Console.WriteLine("ANGULARACCELERATION (X,Y,Z): ( " + angacc.x + " , " + angacc.y + " , " + angacc.z + " ) ");
+            }
+
+            if (keyCode == 0x40)
+            {
+                MoveWrapper.Vector3 acc = MoveWrapper.getAcceleration(id);
+                Console.WriteLine("ACCELERATION (X,Y,Z): ( " + acc.x + " , " + acc.y + " , " + acc.z + " ) ");
+            }
+
+            if (keyCode == 0x10)
+            {
+                MoveWrapper.Vector3 magnet = MoveWrapper.getMagnetisation(id);
+                Console.WriteLine("MAGNETISATION (X,Y,Z): ( " + magnet.x + " , " + magnet.y + " , " + magnet.z + " ) ");
+                /*
+                 * Console.WriteLine("MAGNETISATION (X,Y,Z): ( " +
+                 * MoveWrapper.getMagnetXValue(id) + " , " + MoveWrapper.getMagnetYValue(id) + " , " 
+                    + MoveWrapper.getMagnetZValue(id) + " ) ");
+                */
+            }
+
+
         }
 
         void NavUpdateCallback(int id, int trigger1, int trigger2, int stickX, int stickY)
