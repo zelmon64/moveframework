@@ -21,34 +21,49 @@
 namespace MoveDevice
 {
 	hid_device* MoveHandles[MAXMOVES] = {0};
+	hid_device* MoveHandles_addr[MAXMOVES] = { 0 }; // Only used by _WIN32. Needed by Win 8.1 to get BT address. Copied from PSMoveAPI psmove.c
 	hid_device* NavHandles[MAXMOVES] = {0};
 	TMoveOutput MoveOutput[MAXMOVES] = {0};
 	int MoveCount = 0;
+	int MoveCount_addr = 0;
 	int NavCount = 0;
 
 	int OpenMoves() {
 
 		MoveCount = 0;
+		MoveCount_addr = 0;
 		NavCount = 0;
 
 		struct hid_device_info *devs, *cur_dev;
 
 		unsigned char buf[49];
 		hid_device *handle;
-
+		char* cur_dev_path;
 		//PS Move standard bt stack
+		/* Vendor ID and Product ID of PS Move Controller
+		#define PSMOVE_VID 0x054c
+		#define PSMOVE_PID 0x03d5 */
 		devs = hid_enumerate(0x054c, 0x03d5);
 		cur_dev = devs;
 		while (cur_dev) {
+			cur_dev_path = strdup(cur_dev->path);
 			handle = hid_open_path(cur_dev->path);
-			if (hid_read_timeout(handle,buf,49,500)>0)
+			//if (hid_read_timeout(handle,buf,49,500)>0)
 			{
-				MoveHandles[MoveCount++]=handle;
+				if (strstr(cur_dev_path, "&col03#") == NULL) {
+					if (strstr(cur_dev_path, "&col01#") == NULL) {
+							MoveHandles_addr[MoveCount_addr++] = handle;	// use for getting bt id
+					} else {
+						MoveHandles[MoveCount++] = handle;					// use for everything else
+					}
+				} else {
+					hid_close(handle);
+				}
 			}
-			else
+			/* else
 			{
 				hid_close(handle);
-			}
+			} */
 			cur_dev = cur_dev->next;
 		}
 		hid_free_enumeration(devs);
@@ -165,6 +180,10 @@ namespace MoveDevice
 			if (MoveHandles[i]) {
 				hid_close(MoveHandles[i]);
 				MoveHandles[i]=0;
+			}
+			if (MoveHandles_addr[i]) {
+				hid_close(MoveHandles_addr[i]);
+				MoveHandles_addr[i] = 0;
 			}
 	  }
 	}
@@ -348,13 +367,23 @@ namespace MoveDevice
 	bool ReadMoveBluetoothSettings(int index, PMoveBluetooth bt)
 	{
 		if (index>=MAXMOVES || index<0 || !bt) return false;
-		unsigned char report[49];
-		memset(report,0,49);
+		unsigned char report[16];						// changed from 49 to 16
+		int res;
+		memset(report,0,sizeof(report));
 		report[0]=0x04;
-		if (hid_get_feature_report(MoveHandles[index], report, 49)<1) return false;
+
+		//if (MoveHandles_addr[index]) {
+		res = hid_get_feature_report(MoveHandles_addr[index], report, sizeof(report));
+		/*} else {
+			res = hid_get_feature_report(MoveHandles[index], report, sizeof(report));
+		}*/
+
+		if (res<1) return false;
+
 		memcpy(bt->MoveBtMac,&report[1],6);
 		memcpy(bt->HostBtMac,&report[10],6);
 		memcpy(bt->unknown,&report[7],3);
+		//snprintf(bt->MoveBtMacString, 18, "77:88:99:AA:BB:CC");
 		snprintf(bt->MoveBtMacString,18,"%02X:%02X:%02X:%02X:%02X:%02X",report[6],report[5],report[4],report[3],report[2],report[1]);
 		snprintf(bt->HostBtMacString,18,"%02X:%02X:%02X:%02X:%02X:%02X",report[15],report[14],report[13],report[12],report[11],report[10]);
 		return true;

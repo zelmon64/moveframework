@@ -14,9 +14,15 @@ namespace Move
 		char fileName[]="settings.cfg";
 
 		MoveDevice::TMoveBluetooth bt;
-		MoveDevice::ReadMoveBluetoothSettings(id,&bt);
+		if (MoveDevice::ReadMoveBluetoothSettings(id,&bt))
+			sprintf_s(deviceName, "Move_%s", &bt.MoveBtMacString);
+		else
+			sprintf_s(deviceName, "Move_%d", moveId);
+		
+		//sprintf_s(deviceName, "Move_11:22:33:44:55:66");
 		//device name
-		sprintf_s(deviceName,"Move_%s",bt.MoveBtMacString);
+		//sprintf_s(deviceName, "Move_11:22:33:44:55:66");
+		//sprintf_s(deviceName,"Move_%s",&bt.MoveBtMacString);
 
 		state=NotCalibrated;
 		try
