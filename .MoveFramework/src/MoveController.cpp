@@ -82,7 +82,7 @@ namespace Move
 			manager->getMoveDataEx(id).orientation=orientation->GetOrientation();
 			manager->getMoveDataEx(id).angularVelocity=orientation->GetAngularVelocity();
 			manager->getMoveDataEx(id).angularAcceleration=orientation->GetAngularAcceleration();
-			manager->getMoveDataEx(id).magnetisation = orientation->GetMagnetisation();
+			//manager->getMoveDataEx(id).magnetisation = orientation->GetMagnetisation();
 			for (int i=0; i<17; i++)
 			{
 				int key=0x10<<i;
@@ -98,16 +98,16 @@ namespace Move
 			manager->getMoveDataEx(id).buttons = m.Buttons;
 			manager->getMoveDataEx(id).trigger = m.TAnalog;
 
+			
 			manager->getMoveDataEx(id).battery = m.RawBattery;
-
 			manager->getMoveDataEx(id).temperature = m.RawTemperature;
-
 			manager->getMoveDataEx(id).magnetX = m.RawMagnetX;
 			manager->getMoveDataEx(id).magnetY = m.RawMagnetY;
 			manager->getMoveDataEx(id).magnetZ = m.RawMagnetZ;
 
 			manager->getMoveDataEx(id).acceleration = Vec3(m.RawForceX, m.RawForceY, m.RawForceZ);
-
+			manager->getMoveDataEx(id).magnetisation  = Vec3(m.RawMagnetX, m.RawMagnetY, m.RawMagnetZ);
+			
 			manager->moveUpdated(id);
 
 			lock.release();

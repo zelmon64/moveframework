@@ -118,7 +118,7 @@ namespace Move
 		
 		angularAcc=(gyro-angularVel)/deltat;
 		angularVel=gyro;
-		magnetisation = mag;
+		//magnetisation = mag;
 	}
 
 	Quat MoveOrientation::GetOrientation()
@@ -135,11 +135,11 @@ namespace Move
 	{
 		return angularAcc;
 	}
-
+	/*
 	Vec3 MoveOrientation::GetMagnetisation()
 	{
 		return magnetisation;
-	}
+	}*/
 
 	void MoveOrientation::Reset()
 	{
