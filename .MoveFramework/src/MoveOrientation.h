@@ -17,7 +17,7 @@ namespace Move
 		Vec3 angularVel;
 		Vec3 angularAcc;
 
-		//Vec3 magnetisation;
+		//Vec3 magnetometer;
 
 		MoveCalibration* calibration;
 
@@ -41,7 +41,7 @@ namespace Move
 		Quat GetOrientation();
 		Vec3 GetAngularVelocity();
 		Vec3 GetAngularAcceleration();
-		//Vec3 GetMagnetisation();
+		//Vec3 GetMagnetometer();
 		void UseMagnetometer(bool value);
 		void Reset();
 		void calibrateMagnetometer();

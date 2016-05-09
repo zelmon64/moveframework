@@ -92,7 +92,7 @@ namespace MoveFramework_CS
         public static extern Vector3 getAcceleration(int id);
         [DllImport("MF_CWrapper.dll")]
         [return: MarshalAs(UnmanagedType.Struct)]
-        public static extern Vector3 getMagnetisation(int id);
+        public static extern Vector3 getMagnetometer(int id);
         [DllImport("MF_CWrapper.dll")]
         public static extern bool getButtonState(int id, [MarshalAs(UnmanagedType.I4)] MoveButton keyId);
         [DllImport("MF_CWrapper.dll")]

@@ -113,7 +113,7 @@ namespace MoveFramework_CS
 
             if (keyCode == 0x10)
             {
-                MoveWrapper.Vector3 magnet = MoveWrapper.getMagnetisation(id);
+                MoveWrapper.Vector3 magnet = MoveWrapper.getMagnetometer(id);
                 Console.WriteLine("MAGNETISATION (X,Y,Z): ( " + magnet.x + " , " + magnet.y + " , " + magnet.z + " ) ");
                 /*
                  * Console.WriteLine("MAGNETISATION (X,Y,Z): ( " +
