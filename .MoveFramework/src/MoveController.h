@@ -34,7 +34,7 @@ namespace Move
 
 		void useMagnetometers(bool value);
 		void setRumble(int value);
-		void setColour(int r, int g, int b);
+		void setColour(int r, int g, int b); // For Calibrationtool comment this out
 		void setOrientationGain(float gain);
 		void calibrateMagnetometer();
 		MoveData getMoveData();

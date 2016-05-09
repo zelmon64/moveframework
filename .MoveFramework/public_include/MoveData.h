@@ -13,19 +13,19 @@ namespace Move
 		Vec3 velocity;
 		Vec3 acceleration;
 
-		Vec3 magnetisation;
+		// For Calibrationtool comment out from here ...
+		Vec3 magnetometer;
+		int battery;
+		int temperature;
+		// ... to here
+
+		//int magnetX;
+		//int magnetY;
+		//int magnetZ;
 
 		Quat orientation;
 		Vec3 angularVelocity;
 		Vec3 angularAcceleration;
-
-		int battery;
-
-		int temperature;
-
-		int magnetX;
-		int magnetY;
-		int magnetZ;
 
 		int buttons;
 		int trigger;

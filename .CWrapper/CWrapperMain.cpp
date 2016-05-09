@@ -171,10 +171,10 @@ extern "C" __declspec(dllexport) Vec3 __stdcall getAcceleration(int id)
 	return v;
 }
 
-extern "C" __declspec(dllexport) Vec3 __stdcall getMagnetisation(int id)
+extern "C" __declspec(dllexport) Vec3 __stdcall getMagnetometer(int id)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
-	Move::Vec3 mag = data.magnetisation;
+	Move::Vec3 mag = data.magnetometer;
 	Vec3 v;
 	v.x = mag.x;
 	v.y = mag.y;
@@ -205,7 +205,7 @@ extern "C" __declspec(dllexport) int __stdcall getTemperatureValue(int id)
 	Move::MoveData data = move->getMove(id)->getMoveData();
 	return data.temperature;
 }
-
+/*
 extern "C" __declspec(dllexport) int __stdcall getMagnetXValue(int id)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
@@ -222,17 +222,18 @@ extern "C" __declspec(dllexport) int __stdcall getMagnetZValue(int id)
 {
 	Move::MoveData data = move->getMove(id)->getMoveData();
 	return data.magnetZ;
-}
+}*/
 
 extern "C" __declspec(dllexport) void __stdcall setRumble(int id, int value)
 {
 	move->getMove(id)->setRumble(value);
 }
-
+// For Calibrationtool comment out from here ...
 extern "C" __declspec(dllexport) void __stdcall setColour(int id, int r, int g, int b)
 {
 	move->getMove(id)->setColour(r, g, b);
 }
+// ... to here
 
 extern "C" __declspec(dllexport) bool __stdcall getNavButtonState(int id, int keyId)
 {

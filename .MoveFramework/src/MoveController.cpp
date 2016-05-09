@@ -95,19 +95,21 @@ namespace Move
 					manager->moveKeyReleased(id, (MoveButton)key);
 				}
 			}
+
+			// For Calibrationtool comment out from here ...
 			manager->getMoveDataEx(id).buttons = m.Buttons;
 			manager->getMoveDataEx(id).trigger = m.TAnalog;
 
-			
 			manager->getMoveDataEx(id).battery = m.RawBattery;
 			manager->getMoveDataEx(id).temperature = m.RawTemperature;
-			manager->getMoveDataEx(id).magnetX = m.RawMagnetX;
-			manager->getMoveDataEx(id).magnetY = m.RawMagnetY;
-			manager->getMoveDataEx(id).magnetZ = m.RawMagnetZ;
-
 			manager->getMoveDataEx(id).acceleration = Vec3(m.RawForceX, m.RawForceY, m.RawForceZ);
-			manager->getMoveDataEx(id).magnetisation  = Vec3(m.RawMagnetX, m.RawMagnetY, m.RawMagnetZ);
-			
+			manager->getMoveDataEx(id).magnetometer = Vec3(m.RawMagnetX, m.RawMagnetY, m.RawMagnetZ);
+			// ... to here
+
+			// manager->getMoveDataEx(id).magnetX = m.RawMagnetX;
+			// manager->getMoveDataEx(id).magnetY = m.RawMagnetY;
+			// manager->getMoveDataEx(id).magnetZ = m.RawMagnetZ;
+
 			manager->moveUpdated(id);
 
 			lock.release();
